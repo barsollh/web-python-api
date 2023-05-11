@@ -14,6 +14,9 @@ export default {
     };
   },
   async created() {
+    await quizApiService.getQuizInfo().then((value) => {
+      this.registeredScores = value.data.scores
+    })
     console.log("Composant Home page 'created'");
   }
 };

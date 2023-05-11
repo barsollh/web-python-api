@@ -26,11 +26,13 @@ def PostLogin():
 def PostQuestion():
 	token = request.headers.get('Authorization')
 	try:
+		token = token.split(" ")[1]
+		print(token)
 		decode_token(token)
 	except:
 		return 'Unauthorized', 401
 	paylod = request.get_json()
-	return 200
+	return {"id":paylod["position"]}, 200
 
      
 #	return 'Unauthorized', 401
