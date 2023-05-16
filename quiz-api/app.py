@@ -1,6 +1,9 @@
 from flask import Flask, request
 from flask_cors import CORS
 from jwt_utils import *
+import sqlite3
+from manageQuestion import addQuestion, getQuestion
+from Question import Question
 
 app = Flask(__name__)
 CORS(app)
@@ -32,11 +35,18 @@ def PostQuestion():
 	except:
 		return 'Unauthorized', 401
 	paylod = request.get_json()
+	addQuestion(paylod)
 	return {"id":paylod["position"]}, 200
 
+@app.route('/questions/<int:id>', methods=['GET'])
+def GetQuestionById(id):
+	try:
+		question = getQuestion(id,True)
+	except:
+		return 'Not Found', 404
+	result = question.question_to_json()
+	return result, 200
+
      
-#	return 'Unauthorized', 401
-
-
 if __name__ == "__main__":
     app.run()
