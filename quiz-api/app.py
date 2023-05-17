@@ -3,6 +3,7 @@ from flask_cors import CORS
 from jwt_utils import *
 import sqlite3
 from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions, updateQuestion
+from manageParticipations import deleteAllParticipations, addParticipation
 from Question import Question
 
 app = Flask(__name__)
@@ -36,7 +37,7 @@ def PostQuestion():
 		return 'Unauthorized', 401
 	paylod = request.get_json()
 	addQuestion(paylod)
-	return {"id":paylod["position"]}, 200
+	return {"position":paylod["position"]}, 200
 
 @app.route('/questions/<int:id>', methods=['GET'])
 def GetQuestionById(id):
@@ -100,6 +101,24 @@ def UpdateQuestion(id):
 	except:
 		return 'Not Found', 404
 	return 'No Content', 204
+
+@app.route('/participations/all', methods=['DELETE'])
+def DeleteAllParticipations():
+	token = request.headers.get('Authorization')
+	try:
+		token = token.split(" ")[1]
+		print(token)
+		decode_token(token)
+	except:
+		return 'Unauthorized', 401
+	deleteAllParticipations()
+	return 'No Content', 204
+
+@app.route('/participations', methods=['POST'])
+def PostParticipation():
+	paylod = request.get_json()
+	addParticipation(paylod)
+	return {"name":paylod["name"],"score":paylod["score"]}, 200
 
 if __name__ == "__main__":
     app.run()

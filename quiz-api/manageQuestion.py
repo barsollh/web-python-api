@@ -74,7 +74,7 @@ def updateQuestion(id, paylod) :
     cur.execute("begin")
 
     insertion_result = cur.execute(
-        f"UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?", (paylod["position"],paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]),str(id))
+        f"UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?", (paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]),paylod["position"],str(id))
     )
     # Vérification de l'existence de l'id
     if cur.rowcount == 0:
