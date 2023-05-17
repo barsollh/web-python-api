@@ -1,4 +1,5 @@
 import sqlite3
+import json
 from Question import Question
 
 def addQuestion(paylod) :
@@ -8,7 +9,7 @@ def addQuestion(paylod) :
     cur.execute("begin")
 
     insertion_result = cur.execute(
-        f"INSERT INTO QUESTIONS (position,titre,texte,image) VALUES (?,?,?,?)",(paylod["position"],paylod["title"],paylod["text"],paylod["image"],)
+        f"INSERT INTO QUESTIONS (position,title,text,image,possibleAnswers) VALUES (?,?,?,?,?)",(paylod["position"],paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]))
     )
     # send the request
     cur.execute("commit")
@@ -19,17 +20,42 @@ def getQuestion(data,isId) :
     db_connection.isolation_level = None
     cur = db_connection.cursor()
     cur.execute("begin")
-    param = str(data)
+    
     if isId:
         insertion_result = cur.execute(
-            f"SELECT * FROM QUESTIONS WHERE id = " + param
+            f"SELECT * FROM QUESTIONS WHERE id = " + str(data)
         )
     else:
         insertion_result = cur.execute(
-            f"SELECT * FROM QUESTIONS WHERE position = " + param
+            f"SELECT * FROM QUESTIONS WHERE position = " + data
         )
     result = cur.fetchone()
     db_connection.close()
     
-    return Question( result[4], result[0], result[1], result[2], result[3])
-    
+    return Question( result[4], result[0], result[1], result[2], result[3], result[5])
+
+def deleteQuestionById(id) :
+    db_connection = sqlite3.connect('./database.db')
+    db_connection.isolation_level = None
+    cur = db_connection.cursor()
+    cur.execute("begin")
+
+    insertion_result = cur.execute(
+        f"DELETE FROM QUESTIONS WHERE id = "+str(id)
+    )
+    # send the request
+    cur.execute("commit")
+    db_connection.close()
+
+def deleteAllQuestions() :
+    db_connection = sqlite3.connect('./database.db')
+    db_connection.isolation_level = None
+    cur = db_connection.cursor()
+    cur.execute("begin")
+
+    insertion_result = cur.execute(
+        f"DELETE FROM QUESTIONS"
+    )
+    # send the request
+    cur.execute("commit")
+    db_connection.close()
