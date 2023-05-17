@@ -76,9 +76,8 @@ def updateQuestion(id, paylod) :
     insertion_result = cur.execute(
         f"UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?", (paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]),paylod["position"],str(id))
     )
-    # Vérification de l'existence de l'id
+    
     if cur.rowcount == 0:
-        # L'ID spécifié n'existe pas
         db_connection.rollback()
         db_connection.close()
         raise ValueError("L'ID spécifié n'existe pas dans la table.")

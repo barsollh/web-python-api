@@ -117,8 +117,12 @@ def DeleteAllParticipations():
 @app.route('/participations', methods=['POST'])
 def PostParticipation():
 	paylod = request.get_json()
-	addParticipation(paylod)
-	return {"name":paylod["name"],"score":paylod["score"]}, 200
+	try :
+		score = addParticipation(paylod)
+	except :
+		return 'Bad Request', 400
+
+	return {"playerName":paylod["playerName"],"score":score}, 200
 
 if __name__ == "__main__":
     app.run()
