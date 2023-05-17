@@ -4,8 +4,7 @@ from jwt_utils import *
 import sqlite3
 from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions, updateQuestion
 from manageParticipations import deleteAllParticipations, addParticipation
-from Question import Question
-
+from manageGlobal import rebuildDatabase, getQuizInfo
 app = Flask(__name__)
 CORS(app)
 
@@ -23,26 +22,7 @@ def rebuild_db():
     except:
         return 'Unauthorized', 401
     try:
-        conn = sqlite3.connect('./database.db')
-        cur = conn.cursor()
-        # Création de la table QUESTIONS
-        cur.execute('''CREATE TABLE IF NOT EXISTS QUESTIONS (
-            position INTEGER NOT NULL,
-            title TEXT NOT NULL,
-            text TEXT NOT NULL,
-            image TEXT,
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            possibleAnswers TEXT
-        )''')
-
-        # Création de la table PARTICIPATIONS
-        cur.execute('''CREATE TABLE IF NOT EXISTS PARTICIPATIONS (
-            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            playerName TEXT NOT NULL,
-            score INTEGER NOT NULL
-        )''')
-        conn.commit()
-        conn.close()
+        rebuildDatabase()
     except Exception as e:
         return 'Internal Server Error', 500
 
@@ -50,7 +30,8 @@ def rebuild_db():
 
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
-	return {"size": 0, "scores": []}, 200
+	result = getQuizInfo()
+	return {"size": result["size"], "scores": result["score"]}, 200
 
 @app.route('/login', methods=['POST'])
 def PostLogin():

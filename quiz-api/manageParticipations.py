@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from Question import Question
+from datetime import datetime
 
 def deleteAllParticipations() :
     db_connection = sqlite3.connect('./database.db')
@@ -44,9 +44,11 @@ def addParticipation(payload) :
         if selected_answer["isCorrect"]:
             score += 1
 
+    current_date = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+    
     insertion_result = cur.execute(
-        "INSERT INTO PARTICIPATIONS (playerName, score) VALUES (?, ?)",
-        (payload["playerName"], score)
+        "INSERT INTO PARTICIPATIONS (playerName, score, date) VALUES (?, ?, ?)",
+        (payload["playerName"], score, current_date)
     )
     
     cur.execute("commit")
