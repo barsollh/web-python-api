@@ -43,6 +43,13 @@ def deleteQuestionById(id) :
     insertion_result = cur.execute(
         f"DELETE FROM QUESTIONS WHERE id = "+str(id)
     )
+    # Vérification de l'existence de l'id
+    if cur.rowcount == 0:
+        # L'ID spécifié n'existe pas
+        db_connection.rollback()
+        db_connection.close()
+        raise ValueError("L'ID spécifié n'existe pas dans la table.")
+
     # send the request
     cur.execute("commit")
     db_connection.close()
@@ -56,6 +63,26 @@ def deleteAllQuestions() :
     insertion_result = cur.execute(
         f"DELETE FROM QUESTIONS"
     )
+    # send the request
+    cur.execute("commit")
+    db_connection.close()
+
+def updateQuestion(id, paylod) :
+    db_connection = sqlite3.connect('./database.db')
+    db_connection.isolation_level = None
+    cur = db_connection.cursor()
+    cur.execute("begin")
+
+    insertion_result = cur.execute(
+        f"UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?", (paylod["position"],paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]),str(id))
+    )
+    # Vérification de l'existence de l'id
+    if cur.rowcount == 0:
+        # L'ID spécifié n'existe pas
+        db_connection.rollback()
+        db_connection.close()
+        raise ValueError("L'ID spécifié n'existe pas dans la table.")
+
     # send the request
     cur.execute("commit")
     db_connection.close()

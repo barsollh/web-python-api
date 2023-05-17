@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from jwt_utils import *
 import sqlite3
-from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions
+from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions, updateQuestion
 from Question import Question
 
 app = Flask(__name__)
@@ -58,6 +58,21 @@ def GetQuestionByPosition():
 	print(result)
 	return result, 200
 
+@app.route('/questions/<int:id>', methods=['DELETE'])
+def DeleteQuestionById(id):
+	token = request.headers.get('Authorization')
+	try:
+		token = token.split(" ")[1]
+		print(token)
+		decode_token(token)
+	except:
+		return 'Unauthorized', 401
+	try:
+		deleteQuestionById(id)
+	except:
+		return 'Not Found', 404
+	return 'No Content', 204
+
 @app.route('/questions/all', methods=['DELETE'])
 def DeleteAllQuestions():
 	token = request.headers.get('Authorization')
@@ -69,6 +84,22 @@ def DeleteAllQuestions():
 		return 'Unauthorized', 401
 	deleteAllQuestions()
 	return 'No Content', 204
-     
+
+@app.route('/questions/<int:id>', methods=['PUT'])
+def UpdateQuestion(id):
+	token = request.headers.get('Authorization')
+	try:
+		token = token.split(" ")[1]
+		print(token)
+		decode_token(token)
+	except:
+		return 'Unauthorized', 401
+	paylod = request.get_json()
+	try:
+		updateQuestion(id, paylod)
+	except:
+		return 'Not Found', 404
+	return 'No Content', 204
+
 if __name__ == "__main__":
     app.run()
