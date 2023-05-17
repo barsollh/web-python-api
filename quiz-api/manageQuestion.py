@@ -9,10 +9,15 @@ def addQuestion(payload) :
     cur.execute("begin")
 
     # Décalage des positions des questions suivantes :
-    cur.execute("SELECT id FROM QUESTIONS WHERE position >= ?", (payload["position"],))
-    rows = cur.fetchall()
-    for row in rows:
-        cur.execute("UPDATE QUESTIONS SET position = position + 1 WHERE id = ?", (row[0],))
+    try:
+        cur.execute("SELECT id FROM QUESTIONS WHERE position >= ?", (payload["position"],))
+        rows = cur.fetchall()
+        for row in rows:
+            cur.execute("UPDATE QUESTIONS SET position = position + 1 WHERE id = ?", (row[0],))
+    except:
+        db_connection.rollback()
+        db_connection.close()
+        raise ValueError("L'ID spécifié n'existe pas dans la table.")
 
     insertion_result = cur.execute(
         f"INSERT INTO QUESTIONS (position,title,text,image,possibleAnswers) VALUES (?,?,?,?,?)",(payload["position"],payload["title"],payload["text"],payload["image"],json.dumps(payload["possibleAnswers"]))
@@ -31,7 +36,7 @@ def getQuestion(data,isId) :
     
     if isId:
         insertion_result = cur.execute(
-            f"SELECT * FROM QUESTIONS WHERE id = " + (data,)
+            f"SELECT * FROM QUESTIONS WHERE id = " + str(data)
         )
     else:
         insertion_result = cur.execute(
@@ -48,19 +53,18 @@ def deleteQuestionById(id) :
     cur = db_connection.cursor()
     cur.execute("begin")
 
-    cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
-    current_position = cur.fetchone()[0]
-    
-    insertion_result = cur.execute(
-        f"DELETE FROM QUESTIONS WHERE id = "+ (id,)
-    )
-    # Vérification de l'existence de l'id
-    if cur.rowcount == 0:
-        # L'ID spécifié n'existe pas
+    try:
+        cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
+        current_position = cur.fetchone()[0]
+    except:
         db_connection.rollback()
         db_connection.close()
         raise ValueError("L'ID spécifié n'existe pas dans la table.")
-
+    
+    insertion_result = cur.execute(
+        f"DELETE FROM QUESTIONS WHERE id = ?", (id,)
+    )
+    
     # Décalage des questions suivantes
     cur.execute(
         "UPDATE QUESTIONS SET position = position - 1 WHERE position > ?",
@@ -91,8 +95,13 @@ def updateQuestion(id, payload):
     cur.execute("begin")
 
     # est ce que la position change ?
-    cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
-    current_position = cur.fetchone()[0]
+    try:
+        cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
+        current_position = cur.fetchone()[0]
+    except:
+        db_connection.rollback()
+        db_connection.close()
+        raise ValueError("L'ID spécifié n'existe pas dans la table.")
 
     # Si la position a été modifiée, on décale les positions des questions entre l'ancienne et la nouvelle position
     if current_position != payload["position"]:
@@ -113,11 +122,6 @@ def updateQuestion(id, payload):
         "UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?",
         (payload["title"], payload["text"], payload["image"], json.dumps(payload["possibleAnswers"]), payload["position"], id)
     )
-
-    if cur.rowcount == 0:
-        db_connection.rollback()
-        db_connection.close()
-        raise ValueError("L'ID spécifié n'existe pas dans la table.")
 
     cur.execute("commit")
     db_connection.close()

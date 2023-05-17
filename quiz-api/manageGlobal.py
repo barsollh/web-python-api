@@ -41,7 +41,7 @@ def getQuizInfo():
     cur.execute("begin")
 
     # Récupération des scores de toutes les participations
-    cur.execute("SELECT playerName, score, date FROM PARTICIPATIONS")
+    cur.execute("SELECT playerName, score, date FROM PARTICIPATIONS ORDER BY score DESC")
     rows = cur.fetchall()
     
     scores = []
