@@ -13,6 +13,41 @@ CORS(app)
 def hello_world():
 	x = 'world'
 	return f"Hello, {x}"
+
+@app.route('/rebuild-db', methods=['POST'])
+def rebuild_db():
+    token = request.headers.get('Authorization')
+    try:
+        token = token.split(" ")[1]
+        decode_token(token)
+    except:
+        return 'Unauthorized', 401
+    try:
+        conn = sqlite3.connect('./database.db')
+        cur = conn.cursor()
+        # Création de la table QUESTIONS
+        cur.execute('''CREATE TABLE IF NOT EXISTS QUESTIONS (
+            position INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            text TEXT NOT NULL,
+            image TEXT,
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            possibleAnswers TEXT
+        )''')
+
+        # Création de la table PARTICIPATIONS
+        cur.execute('''CREATE TABLE IF NOT EXISTS PARTICIPATIONS (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            playerName TEXT NOT NULL,
+            score INTEGER NOT NULL
+        )''')
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        return 'Internal Server Error', 500
+
+    return 'Ok', 200
+
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
 	return {"size": 0, "scores": []}, 200
@@ -35,9 +70,9 @@ def PostQuestion():
 		decode_token(token)
 	except:
 		return 'Unauthorized', 401
-	paylod = request.get_json()
-	addQuestion(paylod)
-	return {"position":paylod["position"]}, 200
+	payload = request.get_json()
+	id = addQuestion(payload)
+	return {"id":id}, 200
 
 @app.route('/questions/<int:id>', methods=['GET'])
 def GetQuestionById(id):
@@ -95,9 +130,9 @@ def UpdateQuestion(id):
 		decode_token(token)
 	except:
 		return 'Unauthorized', 401
-	paylod = request.get_json()
+	payload = request.get_json()
 	try:
-		updateQuestion(id, paylod)
+		updateQuestion(id, payload)
 	except:
 		return 'Not Found', 404
 	return 'No Content', 204
@@ -116,13 +151,13 @@ def DeleteAllParticipations():
 
 @app.route('/participations', methods=['POST'])
 def PostParticipation():
-	paylod = request.get_json()
+	payload = request.get_json()
 	try :
-		score = addParticipation(paylod)
+		score = addParticipation(payload)
 	except :
 		return 'Bad Request', 400
 
-	return {"playerName":paylod["playerName"],"score":score}, 200
+	return {"playerName":payload["playerName"],"score":score}, 200
 
 if __name__ == "__main__":
     app.run()

@@ -2,18 +2,26 @@ import sqlite3
 import json
 from Question import Question
 
-def addQuestion(paylod) :
+def addQuestion(payload) :
     db_connection = sqlite3.connect('./database.db')
     db_connection.isolation_level = None
     cur = db_connection.cursor()
     cur.execute("begin")
 
+    # Décalage des positions des questions suivantes :
+    cur.execute("SELECT id FROM QUESTIONS WHERE position >= ?", (payload["position"],))
+    rows = cur.fetchall()
+    for row in rows:
+        cur.execute("UPDATE QUESTIONS SET position = position + 1 WHERE id = ?", (row[0],))
+
     insertion_result = cur.execute(
-        f"INSERT INTO QUESTIONS (position,title,text,image,possibleAnswers) VALUES (?,?,?,?,?)",(paylod["position"],paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]))
+        f"INSERT INTO QUESTIONS (position,title,text,image,possibleAnswers) VALUES (?,?,?,?,?)",(payload["position"],payload["title"],payload["text"],payload["image"],json.dumps(payload["possibleAnswers"]))
     )
+    question_id = cur.lastrowid
     # send the request
     cur.execute("commit")
     db_connection.close()
+    return question_id
     
 def getQuestion(data,isId) :
     db_connection = sqlite3.connect('./database.db', timeout=30)
@@ -23,7 +31,7 @@ def getQuestion(data,isId) :
     
     if isId:
         insertion_result = cur.execute(
-            f"SELECT * FROM QUESTIONS WHERE id = " + str(data)
+            f"SELECT * FROM QUESTIONS WHERE id = " + (data,)
         )
     else:
         insertion_result = cur.execute(
@@ -40,8 +48,11 @@ def deleteQuestionById(id) :
     cur = db_connection.cursor()
     cur.execute("begin")
 
+    cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
+    current_position = cur.fetchone()[0]
+    
     insertion_result = cur.execute(
-        f"DELETE FROM QUESTIONS WHERE id = "+str(id)
+        f"DELETE FROM QUESTIONS WHERE id = "+ (id,)
     )
     # Vérification de l'existence de l'id
     if cur.rowcount == 0:
@@ -50,6 +61,12 @@ def deleteQuestionById(id) :
         db_connection.close()
         raise ValueError("L'ID spécifié n'existe pas dans la table.")
 
+    # Décalage des questions suivantes
+    cur.execute(
+        "UPDATE QUESTIONS SET position = position - 1 WHERE position > ?",
+        (current_position,)
+    )
+    
     # send the request
     cur.execute("commit")
     db_connection.close()
@@ -67,21 +84,40 @@ def deleteAllQuestions() :
     cur.execute("commit")
     db_connection.close()
 
-def updateQuestion(id, paylod) :
+def updateQuestion(id, payload):
     db_connection = sqlite3.connect('./database.db')
     db_connection.isolation_level = None
     cur = db_connection.cursor()
     cur.execute("begin")
 
-    insertion_result = cur.execute(
-        f"UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?", (paylod["title"],paylod["text"],paylod["image"],json.dumps(paylod["possibleAnswers"]),paylod["position"],str(id))
-    )
+    # est ce que la position change ?
+    cur.execute("SELECT position FROM QUESTIONS WHERE id = ?", (id,))
+    current_position = cur.fetchone()[0]
+
+    # Si la position a été modifiée, on décale les positions des questions entre l'ancienne et la nouvelle position
+    if current_position != payload["position"]:
+        if current_position < payload["position"]:
+            # Décalage vers le haut
+            cur.execute(
+                "UPDATE QUESTIONS SET position = position - 1 WHERE position > ? AND position <= ?",
+                (current_position, payload["position"])
+            )
+        else:
+            # Décalage vers le bas
+            cur.execute(
+                "UPDATE QUESTIONS SET position = position + 1 WHERE position >= ? AND position < ?",
+                (payload["position"], current_position)
+            )
     
+    update_result = cur.execute(
+        "UPDATE QUESTIONS SET title = ?, text = ?, image = ?, possibleAnswers = ?, position = ? WHERE id = ?",
+        (payload["title"], payload["text"], payload["image"], json.dumps(payload["possibleAnswers"]), payload["position"], id)
+    )
+
     if cur.rowcount == 0:
         db_connection.rollback()
         db_connection.close()
         raise ValueError("L'ID spécifié n'existe pas dans la table.")
 
-    # send the request
     cur.execute("commit")
     db_connection.close()

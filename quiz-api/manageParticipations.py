@@ -15,9 +15,9 @@ def deleteAllParticipations() :
     cur.execute("commit")
     db_connection.close()
 
-def addParticipation(paylod) :
+def addParticipation(payload) :
     
-    if len(paylod["answers"]) != 10:
+    if len(payload["answers"]) != 10:
         raise ValueError("Bad Request. Le nombre de réponses est incorrect.")
 
     db_connection = sqlite3.connect('./database.db')
@@ -27,7 +27,7 @@ def addParticipation(paylod) :
 
     score = 0
 
-    for index, answer in enumerate(paylod["answers"]):
+    for index, answer in enumerate(payload["answers"]):
         question = cur.execute("SELECT * FROM QUESTIONS WHERE position = ?", (index + 1,)).fetchone()
         if not question:
             db_connection.close()
@@ -46,7 +46,7 @@ def addParticipation(paylod) :
 
     insertion_result = cur.execute(
         "INSERT INTO PARTICIPATIONS (playerName, score) VALUES (?, ?)",
-        (paylod["playerName"], score)
+        (payload["playerName"], score)
     )
     
     cur.execute("commit")
