@@ -72,7 +72,6 @@ def GetQuestionByPosition():
 	except:
 		return 'Not Found', 404
 	result = question.question_to_json()
-	print(result)
 	return result, 200
 
 @app.route('/questions/<int:id>', methods=['DELETE'])

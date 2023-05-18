@@ -28,10 +28,18 @@ export default {
       });
   },
   getQuizInfo() {
-    return this.call("get", "quiz-info");
+    return this.call("get", "quiz-info")
+    .then(response => {
+      console.log("retour appel quizinfo : ", response);
+      return response;
+    });
   },
   getQuestionByPosition(position) {
-    return this.call("get","questions",position);
+    return this.call("get", `questions?position=${position}`)
+    .then(response => {
+      console.log("retour appel getQuestion : ", response);
+      return response;
+    });
   },
   getQuestionById(id) {
     return this.call("get","questions",id);

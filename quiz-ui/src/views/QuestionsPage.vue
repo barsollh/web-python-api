@@ -1,15 +1,20 @@
 <template>
-  <div class="about">
+  <div>
     <h1>Questions page</h1>
+    <QuestionsManager />
   </div>
 </template>
 
 <script>
+import QuestionsManager from "@/components/QuestionManager.vue";
+
 export default {
   name: "QuestionsPage",
+  components:{
+    QuestionsManager
+  },
   data() {
     return {
-      registeredScores : []
     };
   },
 };
