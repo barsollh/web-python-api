@@ -7,7 +7,7 @@
           <input type="text" v-model="username" />
         </p>
         <div>{{ username }}</div>
-        <button @click="launchNewQuiz">Start Quiz</button>
+        <button class="btn btn-primary" @click="launchNewQuiz">Start Quiz</button>
     </span>
   </div>
 </template>

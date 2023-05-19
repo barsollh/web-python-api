@@ -25,7 +25,8 @@ export default {
       },
       currentQuestionPosition: 1,
       totalNumberOfQuestions: 0,
-      quizEnded: false
+      quizEnded: false,
+      answers: []
     };
   },
   async created() {
@@ -47,7 +48,8 @@ export default {
       }
     },
     async answerClickedHandler(answerIndex) {
-      console.log(answerIndex);
+      console.log(answerIndex+1);
+      this.answers.push(answerIndex+1);
       if (this.currentQuestionPosition < this.totalNumberOfQuestions) {
         this.currentQuestionPosition++;
         this.loadQuestionByPosition();
@@ -56,7 +58,12 @@ export default {
       }
     },
     async endQuiz() {
-      console.log('Quiz ended');
+      console.log(`Quiz ended, answers :${this.answers}`);
+      const payload = {
+        playerName: "test",
+        answers: this.answers
+      }
+      await quizApiService.addParticipation(payload)
     }
   }
 };

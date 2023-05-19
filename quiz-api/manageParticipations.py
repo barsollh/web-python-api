@@ -17,13 +17,17 @@ def deleteAllParticipations() :
 
 def addParticipation(payload) :
     
-    if len(payload["answers"]) != 10:
-        raise ValueError("Bad Request. Le nombre de réponses est incorrect.")
 
     db_connection = sqlite3.connect('./database.db')
     db_connection.isolation_level = None
     cur = db_connection.cursor()
     cur.execute("begin")
+    
+    questions_count = cur.execute("SELECT COUNT(*) FROM QUESTIONS").fetchone()[0]
+
+    if len(payload["answers"]) != questions_count:
+        db_connection.close()
+        raise ValueError("Bad Request. Le nombre de réponses est incorrect.")
 
     score = 0
 
