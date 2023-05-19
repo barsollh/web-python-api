@@ -2,32 +2,21 @@
   <div class="container">
     <h1>Home page</h1>
     <router-link to="/start-new-quiz-page" class="btn btn-primary">Démarrer le quiz !</router-link>
-    <div class="score-entry" v-for="scoreEntry in registeredScores" v-bind:key="scoreEntry.date">
-      <span>{{ scoreEntry.playerName }}</span>
-      &nbsp;
-      <span>{{ scoreEntry.score }}</span>
-    </div>
+    <ScoreManager/>
   </div>
 </template>
 
 <script>
-import quizApiService from "@/services/QuizApiService";
+import ScoreManager from '../components/ScoreManager.vue';
 
 export default {
   name: "HomePage",
+  components:{
+    ScoreManager
+  },
   data() {
     return {
-      registeredScores : []
     };
-  },
-  async created() {
-    try {
-      const value = await quizApiService.getQuizInfo();
-      this.registeredScores = value.data.scores;
-    } catch (error) {
-      console.log("Une erreur s'est produite lors de la récupération des scores.", error);
-    }
-    console.log("Composant Home page 'created'");
   }
 };
 </script>

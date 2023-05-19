@@ -2,7 +2,7 @@
   <div class="questions-manager">
     <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
     <QuestionDisplay :question="currentQuestion" @answer-selected="answerClickedHandler" />
-    <button v-if="quizEnded" @click="endQuiz">End Quiz</button>
+    <button class="btn btn-primary" v-if="quizEnded" @click="endQuiz">End Quiz</button>
   </div>
 </template>
 
@@ -72,6 +72,7 @@ export default {
       } catch (error) {
         console.error('Error while adding participation:', error);
       }
+      this.$router.push('/score');
     }
   }
 };
