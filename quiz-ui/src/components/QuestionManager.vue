@@ -9,6 +9,7 @@
 <script>
 import QuestionDisplay from './QuestionDisplay.vue';
 import quizApiService from "@/services/QuizApiService";
+import participationStorageService from "@/services/ParticipationStorageService";
 
 export default {
   name: "QuestionsManager",
@@ -60,10 +61,17 @@ export default {
     async endQuiz() {
       console.log(`Quiz ended, answers :${this.answers}`);
       const payload = {
-        playerName: "test",
+        playerName: await participationStorageService.getPlayerName(),
         answers: this.answers
+      };
+      try {
+        const response = await quizApiService.addParticipation(payload);
+        const score = response.data.score;
+        await participationStorageService.saveParticipationScore(score);
+        console.log(`Score: ${score}`);
+      } catch (error) {
+        console.error('Error while adding participation:', error);
       }
-      await quizApiService.addParticipation(payload)
     }
   }
 };
