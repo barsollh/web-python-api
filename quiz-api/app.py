@@ -1,8 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from jwt_utils import *
-import sqlite3
-from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions, updateQuestion
+from manageQuestion import addQuestion, getQuestion, deleteQuestionById, deleteAllQuestions, updateQuestion, getAllQuestions
 from manageParticipations import deleteAllParticipations, addParticipation
 from manageGlobal import rebuildDatabase, getQuizInfo
 app = Flask(__name__)
@@ -138,6 +137,14 @@ def PostParticipation():
 		return 'Bad Request', 400
 
 	return {"playerName":payload["playerName"],"score":score}, 200
+
+@app.route('/allquestions', methods=['GET'])
+def getQuestions():
+	try:
+		questions = getAllQuestions()
+	except:
+		return 'Bad Request', 400
+	return questions, 200
 
 if __name__ == "__main__":
     app.run()

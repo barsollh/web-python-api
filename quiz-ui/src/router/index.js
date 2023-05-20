@@ -3,6 +3,10 @@ import HomePage from '../views/HomePage.vue'
 import NewQuizPage from '../views/NewQuizPage.vue'
 import QuestionsPage from '../views/QuestionsPage.vue'
 import ScorePage from '../views/ScorePage.vue'
+import AdminPage from '../views/Admin.vue'
+import QuestionAdminDisplay from '../components/QuestionAdminDisplay.vue'
+import QuestionsList from '../components/QuestionsList.vue';
+import QuestionEdition from '../components/QuestionEdition.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +30,31 @@ const router = createRouter({
       path: '/score',
       name: 'ScorePage',
       component: ScorePage
+    },
+    {
+      path: '/admin',
+      name: 'AdminPage',
+      component: AdminPage
+    },
+    {
+      path: '/questions',
+      name: 'QuestionsList',
+      component: QuestionsList,
+    },
+    {
+      path: '/questions/create',
+      name: 'QuestionCreation',
+      component: QuestionEdition,
+    },
+    {
+      path: '/questions/:id',
+      name: 'QuestionAdminDisplay',
+      component: QuestionAdminDisplay,
+    },
+    {
+      path: '/questions/:id/edit',
+      name: 'QuestionEdition',
+      component: QuestionEdition,
     },
     {
       path: '/about',

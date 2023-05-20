@@ -1,7 +1,7 @@
 <template>
   <div class="question-display">
     <h2>{{ question.title }}</h2>
-    <img v-if="question.image" :src="question.image" />
+    <img v-if="question.image" :src="question.image" class="fixed-size-image" />
     <p>{{ question.text }}</p>
     <ul>
       <li v-for="(answer, index) in question.possibleAnswers" :key="index">
@@ -27,3 +27,10 @@ export default {
   emits: ["answer-selected"]
 };
 </script>
+
+<style>
+.fixed-size-image {
+  width: 200px;
+  height: 200px;
+}
+</style>

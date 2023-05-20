@@ -1,12 +1,13 @@
 <template>
-  <div class="about">
-    <h1>Score page</h1>
+  <div class="container">
+    <h1>Fin du Quiz !</h1>
+    <p>Votre score : {{ score }}</p>
     <ScoreManager/>
   </div>
 </template>
 
 <script>
-//import ParticipationStorageService from "@/services/ParticipationStorageService";
+import ParticipationStorageService from "@/services/ParticipationStorageService";
 import ScoreManager from '../components/ScoreManager.vue';
 
 export default {
@@ -16,10 +17,14 @@ export default {
   },
   data() {
     return {
+      score: 0,
     };
   },
   methods: {
   },
+  async created() {
+    this.score = await ParticipationStorageService.getParticipationScore();
+  }
 };
 </script>
 

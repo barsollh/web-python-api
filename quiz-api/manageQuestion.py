@@ -1,5 +1,6 @@
 import sqlite3
 import json
+
 from Question import Question
 
 def addQuestion(payload) :
@@ -125,3 +126,25 @@ def updateQuestion(id, payload):
 
     cur.execute("commit")
     db_connection.close()
+    
+def getAllQuestions():
+    db_connection = sqlite3.connect('./database.db')
+    db_connection.isolation_level = None
+    cur = db_connection.cursor()
+    cur.execute("SELECT * FROM QUESTIONS")
+    rows = cur.fetchall()
+    questions = []
+    for row in rows:
+        question = {
+            "id": row[4],
+            "position": row[0],
+            "title": row[1],
+            "text": row[2],
+            "image": row[3],
+            "possibleAnswers": json.loads(row[5])
+        }
+        questions.append(question)
+    
+    db_connection.close()
+    return json.dumps(questions)
+
