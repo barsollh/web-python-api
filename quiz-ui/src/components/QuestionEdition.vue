@@ -41,7 +41,7 @@ export default {
     return {
       questionId: null,
       question: {
-        position: 0,
+        position: 1,
         title: '',
         text: '',
         image: null,
@@ -49,18 +49,25 @@ export default {
       },
       minPosition: 1,
       maxPosition: 100,
+      creationMode: false,
       imageUrl: '',
     };
   },
   async mounted() {
-    this.loadQuestion();
+    if (typeof this.$route.params.id === 'undefined') this.creationMode = true;
+    else this.questionId = this.$route.params.id;
+
     const infos = await QuizApiService.getQuizInfo();
     this.maxPosition = infos.data.size;
+    if(this.creationMode) this.maxPosition++;
+
+    this.loadQuestion();
+    this.initializeQuestionCopy();
   },
   methods: {
     saveQuestion() {
       const token = AdministrationStorageService.getToken();
-      if (typeof this.$route.params.id === 'undefined') {
+      if (this.creationMode) {
         QuizApiService.addQuestion(this.question,token)
           .then(() => {
             this.$router.go(-1);
@@ -70,7 +77,7 @@ export default {
           });
       }
       else{
-        QuizApiService.updateQuestion(this.$route.params.id,this.question,token)
+        QuizApiService.updateQuestion(this.questionId,this.question,token)
           .then(() => {
             this.$router.go(-1);
           })
@@ -79,12 +86,15 @@ export default {
           });
       }
     },
+    initializeQuestionCopy() {
+      this.questionCopy = { ...this.question };
+    },
     cancelEdit() {
+      this.question = { ...this.questionCopy };
       this.$router.go(-1);
     },
     loadQuestion() {
-      this.questionId = this.$route.params.id;
-      if (typeof this.questionId !== 'undefined') {
+      if (!this.creationMode) {
         QuizApiService.getQuestionById(this.questionId)
           .then((response) => {
             this.question = response.data;
