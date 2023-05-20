@@ -15,7 +15,7 @@
       <div v-for="(answer, index) in question.possibleAnswers" :key="answer.id">
         <label>
           <input type="text" v-model="answer.text" required>
-          <input type="checkbox" v-model="answer.correct">
+          <input type="checkbox" v-model="answer.isCorrect">
           Correct Answer
         </label>
         <button type="button" @click="removeAnswer(index)">Remove</button>
@@ -103,7 +103,7 @@ export default {
       }
     },
     addAnswer() {
-      this.question.possibleAnswers.push({ text: '', correct: false });
+      this.question.possibleAnswers.push({ text: '', isCorrect: false });
     },
     removeAnswer(index) {
       this.question.possibleAnswers.splice(index, 1);

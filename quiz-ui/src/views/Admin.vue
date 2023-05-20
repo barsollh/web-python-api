@@ -57,10 +57,10 @@ export default {
           this.token = token;
           AdministrationStorageService.setToken(this.token);
         } else {
-          this.errorMessage = 'Mot de passe incorrect';
+          this.errorMessage = 'Erreur lors de l\'authentification';
         }
       } catch (error) {
-        this.errorMessage = "Erreur lors de l'authentification";
+        this.errorMessage = "Mauvais mot de passe";
         console.error(error);
       }
     },

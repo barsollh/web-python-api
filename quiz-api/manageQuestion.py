@@ -131,7 +131,7 @@ def getAllQuestions():
     db_connection = sqlite3.connect('./database.db')
     db_connection.isolation_level = None
     cur = db_connection.cursor()
-    cur.execute("SELECT * FROM QUESTIONS")
+    cur.execute("SELECT * FROM QUESTIONS ORDER BY position ASC")
     rows = cur.fetchall()
     questions = []
     for row in rows:

@@ -4,9 +4,10 @@
     <template v-if="question">
       <p>Title: {{ question.title }}</p>
       <p>Text: {{ question.text }}</p>
+      <img :src="question.image" alt="Preview" v-if="question.image" class="max-dimensions"><br>
       <ul>
         <li v-for="answer in question.possibleAnswers" :key="answer.id">
-          {{ answer.text }} ({{ answer.correct ? 'Correct' : 'Incorrect' }})
+          {{ answer.text }} ({{ answer.isCorrect ? 'Correct' : 'Incorrect' }})
         </li>
       </ul>
       <button @click="editQuestion">Edit</button>
@@ -20,6 +21,7 @@
 
 
 <script>
+import AdministrationStorageService from '../services/AdministrationStorageService';
 import QuizApiService from '../services/QuizApiService';
 
 export default {
@@ -48,9 +50,9 @@ export default {
     },
     deleteQuestion() {
       const questionId = this.$route.params.id;
-      QuizApiService.deleteQuestionById(questionId)
+      QuizApiService.deleteQuestionById(questionId,AdministrationStorageService.getToken())
         .then(() => {
-          this.$router.push('/questions');
+          this.$router.go(-1);
         })
         .catch((error) => {
           console.error(error);
@@ -59,3 +61,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.max-dimensions {
+  max-width: 100%;
+  max-height: 100%;
+}
+</style>

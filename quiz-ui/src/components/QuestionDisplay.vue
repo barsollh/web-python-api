@@ -1,7 +1,7 @@
 <template>
   <div class="question-display">
     <h2>{{ question.title }}</h2>
-    <img v-if="question.image" :src="question.image" class="fixed-size-image" />
+    <img v-if="question.image" :src="question.image" class="max-dimensions" />
     <p>{{ question.text }}</p>
     <ul>
       <li v-for="(answer, index) in question.possibleAnswers" :key="index">
@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style>
-.fixed-size-image {
-  width: 200px;
-  height: 200px;
+.max-dimensions {
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>

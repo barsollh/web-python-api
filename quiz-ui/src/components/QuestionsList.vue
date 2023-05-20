@@ -4,6 +4,7 @@
     <router-link to="/questions/create">Create a Question</router-link>
     <ul>
       <li v-for="question in questions" :key="question.id">
+        {{ question.position }} - 
         <router-link :to="'/questions/' + question.id">{{ question.title }}</router-link>
       </li>
     </ul>
