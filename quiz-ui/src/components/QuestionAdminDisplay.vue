@@ -2,7 +2,7 @@
   <div>
     <h2>Question Admin Display</h2>
     <template v-if="question">
-      <p>Title: {{ question.title }}</p>
+      <p>Position : {{ question.position }} - Title : {{ question.title }}</p>
       <p>Text: {{ question.text }}</p>
       <img :src="question.image" alt="Preview" v-if="question.image" class="max-dimensions"><br>
       <ul>
@@ -12,6 +12,7 @@
       </ul>
       <button @click="editQuestion">Edit</button>
       <button @click="deleteQuestion">Delete</button>
+      <button @click="back">Back</button>
     </template>
     <template v-else>
       <p>Loading question...</p>
@@ -57,6 +58,9 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+    back() {
+      this.$router.go(-1);
     },
   },
 };

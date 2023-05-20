@@ -3,7 +3,7 @@
     <h2>Question Edition</h2>
     <form @submit.prevent="saveQuestion">
       <label for="position">Position:</label>
-      <input type="number" id="position" v-model="question.position" required><br>
+      <input type="number" id="position" v-model="question.position" :min="minPosition" :max="maxPosition" required><br>
       <label for="title">Title:</label>
       <input type="text" id="title" v-model="question.title" required><br>
       <label for="text">Text:</label>
@@ -47,11 +47,15 @@ export default {
         image: null,
         possibleAnswers: [],
       },
+      minPosition: 1,
+      maxPosition: 100,
       imageUrl: '',
     };
   },
-  mounted() {
+  async mounted() {
     this.loadQuestion();
+    const infos = await QuizApiService.getQuizInfo();
+    this.maxPosition = infos.data.size;
   },
   methods: {
     saveQuestion() {
