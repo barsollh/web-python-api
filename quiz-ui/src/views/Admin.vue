@@ -1,25 +1,37 @@
 <template>
   <div>
     <template v-if="!token">
-      <div class="login">
-        <input type="password" v-model="password" placeholder="Mot de passe">
-        <button @click="login">Connexion</button>
-        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <h2 style="text-align: center;">Bienvenue sur la page Administration</h2>
+      <div class="container">
+        <div class="login">
+          <p style="text-align: center;width: 40%;">Veuillez saisir le mot de passe administrateur afin d'accéder à la
+            consultation
+            et à
+            la gestion des questions du
+            Quiz.</p>
+          <input type="password" class="form-control" v-model="password" placeholder="Mot de passe" style="width: 20%;">
+          <p v-if="errorMessage" class="error mt-3">{{ errorMessage }}</p>
+          <button @click="login" class="btn btn-primary mt-3">Connexion</button>
+        </div>
       </div>
     </template>
     <template v-else>
-      <div class="admin">
-        <h1>Admin Page</h1>
-        <template v-if="adminMode === 'questionsList'">
-          <QuestionsList @question-clicked="displayQuestion" @create-clicked="setAdminMode('questionEdition')" />
-        </template>
-        <template v-else-if="adminMode === 'questionEdition'">
-          <QuestionEdition @cancel-edit="setAdminMode('questionsList')" />
-        </template>
-        <template v-else-if="adminMode === 'questionAdminDisplay'">
-          <QuestionAdminDisplay :question="currentQuestion" />
-        </template>
-        <button @click="logout">Déconnexion</button>
+      <div class="container">
+        <div class="admin">
+          <h1 class="text-center">Admin Page</h1>
+          <template v-if="adminMode === 'questionsList'">
+            <QuestionsList @question-clicked="displayQuestion" @create-clicked="setAdminMode('questionEdition')" />
+          </template>
+          <template v-else-if="adminMode === 'questionEdition'">
+            <QuestionEdition @cancel-edit="setAdminMode('questionsList')" />
+          </template>
+          <template v-else-if="adminMode === 'questionAdminDisplay'">
+            <QuestionAdminDisplay :question="currentQuestion" />
+          </template>
+          <div class="d-flex justify-content-center mt-3">
+            <button @click="logout" class="btn btn-warning">Déconnexion</button>
+          </div>
+        </div>
       </div>
     </template>
   </div>
@@ -87,11 +99,23 @@ export default {
 
 <style scoped>
 @media (min-width: 1024px) {
-  .about {
+  .admin {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
+}
+
+.about {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-wrapper {
+  background-color: inherit;
+  padding: 20px;
 }
 
 .login {

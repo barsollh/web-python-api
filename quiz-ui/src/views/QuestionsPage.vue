@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Questions page</h1>
     <QuestionsManager />
   </div>
 </template>

@@ -1,8 +1,15 @@
 <template>
-  <div class="questions-manager">
-    <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }}</h1>
-    <QuestionDisplay :question="currentQuestion" @answer-selected="answerClickedHandler" />
-    <button class="btn btn-primary" v-if="quizEnded" @click="endQuiz">End Quiz</button>
+  <div class="question-marge">
+    <div class="questions-manager">
+      <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }} - {{ currentQuestion.title }}</h1>
+      <br>
+      <br>
+      <QuestionDisplay :question="currentQuestion" @answer-selected="answerClickedHandler" />
+      <br>
+      <div class="text-center">
+        <button class="btn btn-danger" v-if="quizEnded" @click="endQuiz">End Quiz</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,10 +26,10 @@ export default {
   data() {
     return {
       currentQuestion: {
-        title:"",
-        text:"",
-        image:"",
-        possibleAnswers:[]
+        title: "",
+        text: "",
+        image: "",
+        possibleAnswers: []
       },
       currentQuestionPosition: 1,
       totalNumberOfQuestions: 0,
@@ -32,7 +39,7 @@ export default {
   },
   async created() {
     const infos = await quizApiService.getQuizInfo();
-    console.log("size : " + infos.data.size);
+    // console.log("size : " + infos.data.size);
     this.totalNumberOfQuestions = infos.data.size;
     this.loadQuestionByPosition();
   },
@@ -49,8 +56,8 @@ export default {
       }
     },
     async answerClickedHandler(answerIndex) {
-      console.log(answerIndex+1);
-      this.answers.push(answerIndex+1);
+      console.log(answerIndex + 1);
+      this.answers.push(answerIndex + 1);
       if (this.currentQuestionPosition < this.totalNumberOfQuestions) {
         this.currentQuestionPosition++;
         this.loadQuestionByPosition();
@@ -77,3 +84,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.question-marge {
+  margin-top: 60px;
+  /* Ajout de la marge en haut */
+}
+</style>

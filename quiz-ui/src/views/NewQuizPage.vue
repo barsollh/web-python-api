@@ -1,16 +1,27 @@
 <template>
-  <div class="about">
-    <h1>Start new quiz</h1>
-    <span>
-        <p>
-          <label>Player Name:</label>
-          <input type="text" v-model="username" />
-        </p>
-        <div>{{ username }}</div>
-        <button class="btn btn-primary" @click="launchNewQuiz">Start Quiz</button>
-    </span>
+  <div>
+    <div>
+      <h1>Start new quiz</h1>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="card"
+        style="width: 18rem; height: fit-content; margin-top: 5rem; background-color: #222222; color: white;">
+        <div class="card-body" style="align-content: center;">
+          <h5 class="card-title">Entrez votre pseudo</h5>
+          <p class="card-text">
+            <input type="text" class="form-control" placeholder="Username" v-model="username" />
+            <br>
+            <br>
+            <button class="btn btn-primary" style="align-content: center;" @click="launchNewQuiz">Start Quiz</button>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
+
 
 <script>
 import ParticipationStorageService from "@/services/ParticipationStorageService";
@@ -32,12 +43,4 @@ export default {
 };
 </script>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style></style>

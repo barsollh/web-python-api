@@ -4,15 +4,18 @@
     <template v-if="question">
       <p>Position : {{ question.position }} - Title : {{ question.title }}</p>
       <p>Text: {{ question.text }}</p>
-      <img :src="question.image" alt="Preview" v-if="question.image" class="max-dimensions"><br>
+      <img :src="question.image" alt="Preview" v-if="question.image" class="img-fluid"><br>
       <ul>
         <li v-for="answer in question.possibleAnswers" :key="answer.id">
           {{ answer.text }} ({{ answer.isCorrect ? 'Correct' : 'Incorrect' }})
         </li>
       </ul>
-      <button @click="editQuestion">Edit</button>
-      <button @click="deleteQuestion">Delete</button>
-      <button @click="back">Back</button>
+      <br>
+      <div class="d-grid gap-3  d-md-block">
+        <button @click="editQuestion" class="btn btn-primary">Edit</button> &nbsp;
+        <button @click="deleteQuestion" class="btn btn-danger">Delete</button> &nbsp;
+        <button @click="back" class="btn btn-warning">Back</button>
+      </div>
     </template>
     <template v-else>
       <p>Loading question...</p>
@@ -65,10 +68,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.max-dimensions {
-  max-width: 100%;
-  max-height: 100%;
-}
-</style>
