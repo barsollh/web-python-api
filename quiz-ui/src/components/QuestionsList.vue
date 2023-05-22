@@ -10,7 +10,7 @@
       </ul>
       <br>
       <div>
-        <router-link to="/questions/create" class="btn btn-success">Create a Question</router-link>
+        <router-link to="/questions/create" class="btn btn-outline-success">Create a Question</router-link>
       </div>
     </div>
   </div>
