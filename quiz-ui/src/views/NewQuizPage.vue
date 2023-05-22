@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     launchNewQuiz() {
+      if (!this.username) this.username = "Anonymous player";
       console.log("Launch new quiz with", this.username);
       ParticipationStorageService.savePlayerName(this.username);
       this.$router.push('/questions');

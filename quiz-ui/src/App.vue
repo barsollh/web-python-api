@@ -6,9 +6,12 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="app">
     <header>
       <div class="wrapper">
-        <nav class="fixed-top navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light">
+        <nav class="fixed-top navbar navbar-expand-lg navbar-light custom-navbar">
           <div class="container-fluid">
-            <RouterLink to="/" class="navbar-brand">Home</RouterLink>
+            <a class="navbar-brand" href="#">
+              <img src="./assets/QuizAppLogo.png" alt="Logo" class="navbar-logo">
+            </a>
+            <RouterLink to="/" class="navbar-brand" style="color: white;"><b>Home</b></RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -16,10 +19,10 @@ import { RouterLink, RouterView } from 'vue-router'
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <RouterLink to="/about" class="nav-link">About</RouterLink>
+                  <RouterLink to="/about" class="nav-link" style="color: white;">About</RouterLink>
                 </li>
                 <li class="nav-item">
-                  <RouterLink to="/admin" class="nav-link">Admin</RouterLink>
+                  <RouterLink to="/admin" class="nav-link" style="color: white;">Admin</RouterLink>
                 </li>
               </ul>
             </div>
@@ -35,4 +38,12 @@ import { RouterLink, RouterView } from 'vue-router'
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.navbar-logo {
+  max-height: 40px;
+}
+
+.custom-navbar {
+  background-color: #7441EC;
+}
+</style>

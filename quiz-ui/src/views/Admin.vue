@@ -16,24 +16,23 @@
       </div>
     </template>
     <template v-else>
-      <div class="container">
-        <div class="admin">
-          <h1 class="text-center">Admin Page</h1>
-          <template v-if="adminMode === 'questionsList'">
-            <QuestionsList @question-clicked="displayQuestion" @create-clicked="setAdminMode('questionEdition')" />
-          </template>
-          <template v-else-if="adminMode === 'questionEdition'">
-            <QuestionEdition @cancel-edit="setAdminMode('questionsList')" />
-          </template>
-          <template v-else-if="adminMode === 'questionAdminDisplay'">
-            <QuestionAdminDisplay :question="currentQuestion" />
-          </template>
-          <div class="d-flex justify-content-center mt-3">
-            <button @click="logout" class="btn btn-warning">Déconnexion</button>
-          </div>
+      <div class="d-flex flex-column align-items-center">
+        <h1 class="text-center">Admin Page</h1>
+        <template v-if="adminMode === 'questionsList'">
+          <QuestionsList @question-clicked="displayQuestion" @create-clicked="setAdminMode('questionEdition')" />
+        </template>
+        <template v-else-if="adminMode === 'questionEdition'">
+          <QuestionEdition @cancel-edit="setAdminMode('questionsList')" />
+        </template>
+        <template v-else-if="adminMode === 'questionAdminDisplay'">
+          <QuestionAdminDisplay :question="currentQuestion" />
+        </template>
+        <div class="d-flex justify-content-center mt-3">
+          <button @click="logout" class="btn btn-warning">Déconnexion</button>
         </div>
       </div>
     </template>
+
   </div>
 </template>
 

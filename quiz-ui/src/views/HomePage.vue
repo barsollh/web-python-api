@@ -9,9 +9,9 @@
 
       <div class="container d-flex flex-column" style="align-items: center;">
         <div class="row flex-grow-1" style="">
-          <div class="card"
-            style="width: 18rem; height: 22rem; margin-top: 5rem; background-color: #222222; color: white;">
-            <img src="..." class="card-img-top" alt="...">
+          <div class="card p-0"
+            style="height: fit-content; width: fit-content;; margin-top: 0rem; background-color: #222222; color: white;">
+            <img src="../assets/QuizAppBanner.png" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">Quiz</h5>
               <p class="card-text">Effectuez le quiz et tentez de remporter la première place du classement !
@@ -31,16 +31,7 @@
 
       <div class="container d-flex flex-column" style="align-items: center;">
         <div class="row flex-grow-1" style="">
-          <!-- <div class="card"
-            style="width: auto; height: fit-content; margin-top: 5rem; background-color: #222222; color: white;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Meilleurs scores :</h5>
-              <p class="card-text" style="text-align: center;"> -->
           <ScoreManager />
-          <!-- </p>
-            </div>
-          </div> -->
         </div>
 
       </div>
