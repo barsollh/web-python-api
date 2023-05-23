@@ -1,21 +1,23 @@
 <template>
   <div class="border rounded" style="height: fit-content;">
     <h3 style="width: 600px;">Meilleurs scores :</h3>
-    <table class="table" style="color: white;text-align: center;">
+    <table class="table" style="color: white; text-align: center;">
       <thead>
         <tr>
-          <th scope="col"><b>Name</b></th>
-          <th scope="col"><b>Score</b></th>
+          <th scope="col" style="width: 10%;"><b>Classement</b></th>
+          <th scope="col" style="width: 45%;"><b>Nom</b></th>
+          <th scope="col" style="width: 45%;"><b>Score</b></th>
         </tr>
       </thead>
       <tbody>
         <tr class="score-entry" v-for="(scoreEntry, index) in paginatedScores" :key="index">
+          <td><b>{{ getRank(index) }}</b></td>
           <td>{{ scoreEntry.playerName }}</td>
           <td>{{ scoreEntry.score }}</td>
         </tr>
       </tbody>
     </table>
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" style="margin-left: 10px;">
       <ul class="pagination">
         <li class="page-item" :class="{ active: page === currentPage }" v-for="page in totalPages" :key="page">
           <a class="page-link" href="#" @click="goToPage(page)">{{ page }}</a>
@@ -25,7 +27,6 @@
   </div>
 </template>
 
-  
 <script>
 import quizApiService from "@/services/QuizApiService";
 
@@ -62,6 +63,10 @@ export default {
     goToPage(page) {
       this.currentPage = page;
     },
-  }
+    getRank(index) {
+      const startIndex = (this.currentPage - 1) * this.pageSize;
+      return startIndex + index + 1;
+    },
+  },
 };
 </script>

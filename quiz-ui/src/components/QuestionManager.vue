@@ -1,12 +1,13 @@
 <template>
   <div class="question-marge">
     <div class="questions-manager">
-      <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }} - {{ currentQuestion.title }}</h1>
+      <h1 v-if="!quizEnded">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestions }} - {{
+        currentQuestion.title }}</h1>
       <br>
       <br>
-      <QuestionDisplay :question="currentQuestion" @answer-selected="answerClickedHandler" />
+      <QuestionDisplay v-if="!quizEnded" :question="currentQuestion" @answer-selected="answerClickedHandler" />
       <br>
-      <div class="text-center">
+      <div class="text-center" style="margin-bottom: 30px;">
         <button class="btn btn-danger" v-if="quizEnded" @click="endQuiz">End Quiz</button>
       </div>
     </div>
@@ -84,10 +85,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.question-marge {
-  margin-top: 60px;
-  /* Ajout de la marge en haut */
-}
-</style>

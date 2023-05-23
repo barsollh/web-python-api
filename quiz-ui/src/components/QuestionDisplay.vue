@@ -7,13 +7,14 @@
           <div class="card-body">
             <h2 class="card-title text-center">{{ question.text }}</h2>
             <h3 class="card-text text-start"></h3>
-            <ul class="list-group list-group-flush">
-              <li class="answer-link list-group-item cursor-pointer" v-for="(answer, index) in question.possibleAnswers"
-                :key="index" @click.prevent="selectAnswer(index)">
-                <a>{{ answer.text }}</a>
-              </li>
-            </ul>
+
           </div>
+          <ul class="list-group list-group-flush">
+            <li class="answer-link list-group-item cursor-pointer" v-for="(answer, index) in question.possibleAnswers"
+              :key="index" @click.prevent="selectAnswer(index)">
+              <a>{{ answer.text }}</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
