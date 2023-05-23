@@ -12,7 +12,7 @@
         <textarea class="form-control" id="text" v-model="question.text" required></textarea><br>
         <label for="image">Image:</label>
         <image-upload @file-change="handleImageChange"></image-upload><br>
-        <img :src="imageUrl" alt="Preview" v-if="imageUrl" class="max-dimensions"><br>
+        <img :src="imageUrl" alt="Preview" v-if="imageUrl" class="max-dimensions" id="image"><br>
         <h3>Possible Answers:</h3>
         <div v-for="(answer, index) in question.possibleAnswers" :key="answer.id">
           <label>
@@ -135,9 +135,8 @@ export default {
 };
 </script>
 
-<style>
-.max-dimensions {
-  max-width: 100%;
-  max-height: 100%;
+<style scoped>
+#image {
+  max-width: 40rem;
 }
 </style>

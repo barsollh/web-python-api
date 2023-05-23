@@ -24,15 +24,28 @@ export default {
     return {
       score: 0,
       question_count: 0,
+      questions: []
     };
   },
+  mounted() {
+    this.loadQuestions();
+  },
   methods: {
+    loadQuestions() {
+      QuizApiService.getQuestions()
+        .then((response) => {
+          this.questions = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
   },
   async created() {
     this.score = await ParticipationStorageService.getParticipationScore();
     const response = await QuizApiService.getQuizInfo();
     this.question_count = response.data.size;
-  }
+  },
 };
 </script>
 
@@ -43,5 +56,13 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+
+.questions .correct-answer.selected {
+  background-color: green;
+}
+
+.questions .incorrect-answer.selected {
+  background-color: red;
 }
 </style>

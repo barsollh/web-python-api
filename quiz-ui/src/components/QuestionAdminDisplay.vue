@@ -6,8 +6,8 @@
       <div class="justify-content-center">
         <div class="row">
           <div class="col-lg-12 d-flex align-items-center justify-content-center">
-            <div class="card" style="background-color: #222222; color: white;">
-              <img v-if="question.image" :src="question.image" class="card-img-top" alt="...">
+            <div class="card" id="card1">
+              <img v-if="question.image" :src="question.image" class="card-img-top">
               <div class="card-body">
                 <h2 class="card-title text-center">{{ question.text }}</h2>
                 <h3 class="card-text text-start"></h3>
@@ -83,3 +83,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#card1 {
+  max-width: 40rem;
+  background-color: #222222;
+  color: white;
+}
+</style>

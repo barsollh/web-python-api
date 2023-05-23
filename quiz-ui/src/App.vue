@@ -9,7 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <nav class="fixed-top navbar navbar-expand-lg navbar-light custom-navbar">
           <div class="container-fluid">
             <a class="navbar-brand" href="#">
-              <img src="./assets/QuizAppLogo.png" alt="Logo" class="navbar-logo">
+              <img src="./assets/QuizAppLogo4.png" alt="Logo" class="navbar-logo">
             </a>
             <RouterLink to="/" class="navbar-brand" style="color: white;"><b>Home</b></RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -44,6 +44,9 @@ import { RouterLink, RouterView } from 'vue-router'
 }
 
 .custom-navbar {
-  background-color: #7441EC;
+  /* background-color: #C4FF61; */
+  /* background-color: #4182D8; */
+  background-color: #4F8BDB;
+
 }
 </style>

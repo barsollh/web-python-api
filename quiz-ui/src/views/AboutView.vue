@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 class="text-md-start">Bienvenue sur QuizApp !</h1>
+      <h1 class="text-md-start">Bienvenue sur QuizAi !</h1>
     </div>
     <div class="d-flex flex-row" style="justify-content: space-around;">
       <br>
@@ -12,14 +12,14 @@
           Bonjour,
           <br>
           <br>
-          Bienvenue sur QuizApp. Cette application a été réalisé par BARSOLLE Hugo et BLITZ Benjamin. Nous sommes deux
+          Bienvenue sur QuizAi. Cette application a été réalisé par BARSOLLE Hugo et BLITZ Benjamin. Nous sommes deux
           étudiants d'ESIEE Paris en 4ème année dans la filière Informatique et Applications, ingénierie 3D et technologie
           des médais. Ceci est notre toute première application Vuejs.
           <br>
           <br>
-          Sur cette App, vous pouvez effectuer un Quiz composé de plusieurs questions.
-          À chaque question est associée une liste de réponses. Il peut y avoir plusieurs bonnes réponses mais vous ne
-          pouvez sélectionner qu'une seule d'entre elles.
+          Sur cette App, vous pouvez effectuer un Quiz composé de plusieurs questions. Pour chaque question, une oeuvre
+          d'art s'affiche. Votre objectif est de déterminé qui parmis les artistes ou IA proposés a réalisé cette oeuvre.
+          Une seule réponse est possible.
           Attention ! Si vous cliquez sur une réponse, celle-ci sera sélectionnée et vous passerez directement à la
           question suivante sans pouvoir revenir en arrière.
           Une bonne réponse vous rapportera 1 point, une mauvaise réponse vous en raportera 0. À la fin du Quiz vous
