@@ -14,7 +14,8 @@
             <img src="../assets/QuizAppBanner4.png" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">Quiz</h5>
-              <p class="card-text">Effectuez le quiz et tentez de remporter la première place du classement !
+              <p class="card-text">Devinez quel est l'auteur ou l'IA à l'origine des œuvres qui s'affichent et tentez de
+                remporter la première place du classement !
                 <br>
                 <br>
                 <a style="font-weight: bold; color: #2768BF;">Attention ! </a>

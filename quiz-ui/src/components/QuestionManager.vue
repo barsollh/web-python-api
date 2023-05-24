@@ -8,7 +8,7 @@
       <QuestionDisplay v-if="!quizEnded" :question="currentQuestion" @answer-selected="answerClickedHandler" />
       <br>
       <div class="text-center" style="margin-bottom: 30px;">
-        <button class="btn btn-danger" v-if="quizEnded" @click="endQuiz">End Quiz</button>
+        <button class="btn btn-danger" v-if="quizEnded" @click="endQuiz">Terminer le Quiz</button>
       </div>
     </div>
   </div>

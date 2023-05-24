@@ -1,7 +1,7 @@
 <template>
-  <div class="card" style="background-color: #222222; color: white;">
+  <div class="card" style="background-color: #222222; color: white; width: 600px;">
     <div class="card-body">
-      <h2 class="card-title text-center">Question List</h2>
+      <h2 class="card-title text-center">Liste des Questions</h2>
       <ul class="list-group list-group-flush">
         <li class="answer-link list-group-item cursor-pointer" v-for="question in questions" :key="question.id">
           {{ question.position }} -
@@ -10,7 +10,7 @@
       </ul>
       <br>
       <div>
-        <router-link to="/questions/create" class="btn btn-outline-success">Create a Question</router-link>
+        <router-link to="/questions/create" class="btn btn-success">Créer une Question</router-link>
       </div>
     </div>
   </div>

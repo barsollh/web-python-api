@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Question Admin Display</h2>
+    <h2>Administration</h2>
     <template v-if="question">
       <h4>{{ question.position }} - {{ question.title }}</h4>
       <div class="justify-content-center">
@@ -13,15 +13,15 @@
                 <h3 class="card-text text-start"></h3>
                 <ul>
                   <li v-for="answer in question.possibleAnswers" :key="answer.id">
-                    {{ answer.text }} ({{ answer.isCorrect ? 'Correct' : 'Incorrect' }})
+                    {{ answer.text }} ({{ answer.isCorrect ? 'Vrai' : 'Faux' }})
                   </li>
                 </ul>
                 <div class="d-grid gap-3  d-md-block text-center">
-                  <button @click="editQuestion" class="btn btn-outline-success">Edit</button> &nbsp;
-                  <button @click="deleteQuestion" class="btn btn-outline-danger">Delete</button> &nbsp;
+                  <button @click="editQuestion" class="btn btn-outline-success">Éditer</button> &nbsp;
+                  <button @click="deleteQuestion" class="btn btn-outline-danger">Supprimer</button> &nbsp;
                 </div>
                 <div class="text-end">
-                  <button @click="back" class="btn btn-warning">Back</button>
+                  <button @click="back" class="btn btn-warning">Retour</button>
                 </div>
               </div>
 
@@ -33,7 +33,7 @@
 
     </template>
     <template v-else>
-      <p>Loading question...</p>
+      <p>Chargement de la question...</p>
     </template>
   </div>
 </template>

@@ -6,7 +6,7 @@
   </div>
   <br>
   <div class="d-flex justify-content-center">
-    <RouterLink to="/" class="btn btn-primary">Home</RouterLink>
+    <RouterLink to="/" class="btn btn-primary">Retour à l'accueil</RouterLink>
   </div>
 </template>
 

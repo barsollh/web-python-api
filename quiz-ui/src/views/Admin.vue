@@ -17,7 +17,7 @@
     </template>
     <template v-else>
       <div class="d-flex flex-column align-items-center">
-        <h1 class="text-center">Admin Page</h1>
+        <h1 class="text-center">Page d'administration</h1>
         <template v-if="adminMode === 'questionsList'">
           <QuestionsList @question-clicked="displayQuestion" @create-clicked="setAdminMode('questionEdition')" />
         </template>

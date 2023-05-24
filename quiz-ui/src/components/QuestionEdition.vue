@@ -1,37 +1,37 @@
 <template>
   <div class="d-flex flex-column align-items-center" style="margin-bottom: 30px;">
-    <h2>Question Edition</h2>
+    <h2>Édition de question</h2>
     <div class="input-group flex-nowrap justify-content-center">
       <form @submit.prevent="saveQuestion">
-        <label for="position">Position:</label>
+        <label for="position">Position :</label>
         <input type="number" class="form-control" id="position" v-model="question.position" :min="minPosition"
           :max="maxPosition" required><br>
-        <label for="title">Title:</label>
+        <label for="title">Titre :</label>
         <input type="text" class="form-control" placeholder="Title" id="title" v-model="question.title" required><br>
-        <label for="text">Text:</label>
+        <label for="text">Texte :</label>
         <textarea class="form-control" id="text" v-model="question.text" required></textarea><br>
-        <label for="image">Image:</label>
+        <label for="image">Image :</label>
         <image-upload @file-change="handleImageChange"></image-upload><br>
         <img :src="imageUrl" alt="Preview" v-if="imageUrl" class="max-dimensions" id="image"><br>
-        <h3>Possible Answers:</h3>
+        <h3>Réponses :</h3>
         <div v-for="(answer, index) in question.possibleAnswers" :key="answer.id">
           <label>
             <div class="input-group mb-3">
               <input type="text" class="form-control" v-model="answer.text" required>
-              <div class="input-group-text"> Correct Answer &nbsp;
+              <div class="input-group-text"> Bonne réponse &nbsp;
                 <input class="form-check-input mt-0" type="checkbox" v-model="answer.isCorrect">
               </div>
-              <button type="button" @click="removeAnswer(index)" class="btn btn-outline-danger">Remove</button>
+              <button type="button" @click="removeAnswer(index)" class="btn btn-outline-danger">Supprimer</button>
             </div>
           </label>
         </div>
-        <button type="button" @click="addAnswer" class="btn btn-outline-secondary">Add Answer</button>
+        <button type="button" @click="addAnswer" class="btn btn-outline-secondary">Ajouter une réponse</button>
         <br>
         <br>
-        <button type="submit" class="btn btn-success">Save</button>
+        <button type="submit" class="btn btn-success">Sauvegarder</button>
         &nbsp;
         &nbsp;
-        <button @click="cancelEdit" class="btn btn-warning">Cancel</button>
+        <button @click="cancelEdit" class="btn btn-warning">Annuler</button>
       </form>
     </div>
   </div>

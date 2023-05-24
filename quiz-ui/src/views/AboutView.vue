@@ -12,13 +12,14 @@
           Bonjour,
           <br>
           <br>
-          Bienvenue sur QuizAi. Cette application a été réalisé par BARSOLLE Hugo et BLITZ Benjamin. Nous sommes deux
+          Bienvenue sur QuizAi. Cette application a été réalisée par BARSOLLE Hugo et BLITZ Benjamin. Nous sommes deux
           étudiants d'ESIEE Paris en 4ème année dans la filière Informatique et Applications, ingénierie 3D et technologie
-          des médais. Ceci est notre toute première application Vuejs.
+          des médais. Ceci est notre toute première application Vuejs créée dans le cadre de l'unité 22_E4FI_4I_IN6 - Web
+          Full Stack.
           <br>
           <br>
-          Sur cette App, vous pouvez effectuer un Quiz composé de plusieurs questions. Pour chaque question, une oeuvre
-          d'art s'affiche. Votre objectif est de déterminé qui parmis les artistes ou IA proposés a réalisé cette oeuvre.
+          Sur cette App, vous pouvez effectuer un Quiz composé de plusieurs questions. Pour chaque question, une œuvre
+          d'art s'affiche. Votre objectif est de déterminé qui, parmis les artistes ou IA proposés a réalisé cette œuvre.
           Une seule réponse est possible.
           Attention ! Si vous cliquez sur une réponse, celle-ci sera sélectionnée et vous passerez directement à la
           question suivante sans pouvoir revenir en arrière.

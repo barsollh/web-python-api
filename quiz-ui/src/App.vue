@@ -11,7 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
             <a class="navbar-brand" href="#">
               <img src="./assets/QuizAppLogo4.png" alt="Logo" class="navbar-logo">
             </a>
-            <RouterLink to="/" class="navbar-brand" style="color: white;"><b>Home</b></RouterLink>
+            <RouterLink to="/" class="navbar-brand" style="color: white;"><b>Accueil</b></RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,7 @@ import { RouterLink, RouterView } from 'vue-router'
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <RouterLink to="/about" class="nav-link" style="color: white;">About</RouterLink>
+                  <RouterLink to="/about" class="nav-link" style="color: white;">Infos</RouterLink>
                 </li>
                 <li class="nav-item">
                   <RouterLink to="/admin" class="nav-link" style="color: white;">Admin</RouterLink>
