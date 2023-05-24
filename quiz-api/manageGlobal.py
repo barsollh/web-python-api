@@ -8,13 +8,11 @@ def rebuildDatabase() :
     cur.execute("begin")
     
     # Réinitialisation des données stockées
-    cur.execute("DELETE FROM QUESTIONS")
-    cur.execute("DELETE FROM PARTICIPATIONS")
-    cur.execute("DELETE FROM sqlite_sequence WHERE name='QUESTIONS'")
-    cur.execute("DELETE FROM sqlite_sequence WHERE name='PARTICIPATIONS'")
+    cur.execute("DROP TABLE IF EXISTS QUESTIONS")
+    cur.execute("DROP TABLE IF EXISTS PARTICIPATIONS")
     
     # Création de la table QUESTIONS
-    cur.execute('''CREATE TABLE IF NOT EXISTS QUESTIONS (
+    cur.execute('''CREATE TABLE QUESTIONS (
         position INTEGER NOT NULL,
         title TEXT NOT NULL,
         text TEXT NOT NULL,
@@ -24,7 +22,7 @@ def rebuildDatabase() :
     )''')
 
     # Création de la table PARTICIPATIONS
-    cur.execute('''CREATE TABLE IF NOT EXISTS PARTICIPATIONS (
+    cur.execute('''CREATE TABLE PARTICIPATIONS (
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         playerName TEXT NOT NULL,
         score INTEGER NOT NULL,

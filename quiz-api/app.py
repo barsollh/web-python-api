@@ -1,3 +1,5 @@
+import hashlib
+import traceback
 from flask import Flask, request
 from flask_cors import CORS
 from jwt_utils import *
@@ -23,6 +25,7 @@ def rebuild_db():
     try:
         rebuildDatabase()
     except Exception as e:
+        traceback.print_exc()
         return 'Internal Server Error', 500
 
     return 'Ok', 200
@@ -34,13 +37,18 @@ def GetQuizInfo():
 
 @app.route('/login', methods=['POST'])
 def PostLogin():
+
 	payload = request.get_json()
-	if payload["password"] == "flask2023":
-		token = build_token()
-		return {"token": token}, 200
-	else:
+	password = payload["password"].encode('UTF-8')
+	hashed = hashlib.md5(password).digest()
+
+	if hashed != b'\xd8\x17\x06PG\x92\x93\xc1.\x02\x01\xe5\xfd\xf4_@':
 		return 'Unauthorized', 401
 	
+	token = build_token()
+
+	return {"token": token}, 200
+
 @app.route('/questions', methods=['POST'])
 def PostQuestion():
 	token = request.headers.get('Authorization')
