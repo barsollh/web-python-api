@@ -9,10 +9,10 @@
             <h3 class="card-text text-start"></h3>
           </div>
           <ul class="list-group list-group-flush">
-            <li style="color: white;" class="answer-link list-group-item cursor-pointer"
-              v-for="(answer, index) in question.possibleAnswers" :key="index" @click.prevent="selectAnswer(index)"
-              :class="{ 'selected': index === selectedAnswer }" :style="{ backgroundColor: selectedAnswerColor(index) }">
-              <a>{{ answer.text }}</a>
+            <li class="answer-link list-group-item cursor-pointer" v-for="(answer, index) in question.possibleAnswers"
+              :key="index" @click.prevent="selectAnswer(index)" :class="{ 'selected': index === selectedAnswer }"
+              :style="{ backgroundColor: selectedAnswerColor(index) }">
+              <a style="color: white;">{{ answer.text }}</a>
             </li>
           </ul>
         </div>
@@ -49,28 +49,16 @@ export default {
       if (this.showColors) {
         if (index === this.selectedAnswer) {
           if (this.question.possibleAnswers[index].isCorrect) {
-            return 'green';
+            return '#B0F2B6';
           } else {
-            return 'red';
+            return '#FF6961';
           }
-        } else if (
-          this.previousQuestionIndex !== null &&
-          index === this.question.possibleAnswers[this.previousQuestionIndex].userAnswer
-        ) {
-          return 'white';
         }
       }
       return 'transparent';
     }
   },
   emits: ["answer-selected", "end-quiz"],
-  watch: {
-    question(newValue, oldValue) {
-      if (oldValue) {
-        this.previousQuestionIndex = oldValue.possibleAnswers.findIndex(answer => answer.userAnswer !== null);
-      }
-    }
-  }
 };
 </script>
 
@@ -90,17 +78,5 @@ export default {
 
 #card1 {
   max-width: 40rem;
-}
-
-a {
-  color: white;
-}
-
-a.green {
-  color: green;
-}
-
-a.red {
-  color: red;
 }
 </style>
